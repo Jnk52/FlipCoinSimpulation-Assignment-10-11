@@ -2,21 +2,29 @@
 
 heads=0
 tails=0
+
+flipCoin() {
+	result=$((RANDOM % 2))
+        if [ $result -eq 0 ]
+        then
+                $((tails++))
+        else
+                $((heads++))
+        fi
+}
+
 while [ $tails -le 21 -o $heads -le 21 ]
 do
-	result=$((RANDOM % 2))
-if [ $result -eq 0 ]
-then
-		$((tails++))
-	else
-		$((heads++))
-	fi
-              break
+	flipCoin
+	break
 done
 
 if [$heads -eq $tails ]
 then
-	echo "Its a tie !"
+	while [ $(($heads - $tails)) -ne 2 -o $(($tails - $heads)) -ne 2 ]
+	do
+		flipCoin
+	done
 elif [ $heads -gt $tails ]
 then
 	echo "Heads Wins !"
@@ -24,3 +32,4 @@ elif [ $heads -lt $tails ]
 then
 	echo "Tails Wins !"
 fi
+
